@@ -1,4 +1,5 @@
 import type { FunctionComponent } from "react"
+import { usePokemonDetail } from "../api"
 
 interface PokemonModalProps {
   /** The callback that closes the modal */
@@ -11,6 +12,13 @@ export const PokemonModal: FunctionComponent<PokemonModalProps> = ({
   onClose,
   name,
 }) => {
+  const { data, isLoading } = usePokemonDetail(name)
+
+  const artwork =
+    data?.sprites.other["official-artwork"].front_default ??
+    data?.sprites.front_default ??
+    null
+
   return (
     <div
       className="fixed inset-0 bg-black/55 flex items-center justify-center z-50 p-4"
@@ -32,7 +40,30 @@ export const PokemonModal: FunctionComponent<PokemonModalProps> = ({
             ✕
           </button>
         </div>
-        <p className="text-sm text-gray-400">Details coming soon...</p>
+
+        {isLoading ? (
+          <p className="text-sm text-gray-400">Loading...</p>
+        ) : (
+          <div className="flex flex-col items-center gap-3">
+            {artwork && (
+              <img
+                src={artwork}
+                alt={name}
+                className="w-36 h-36 object-contain"
+              />
+            )}
+            <div className="flex gap-1.5">
+              {data?.types.map((type) => (
+                <span
+                  key={type.slot}
+                  className="px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-wide bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300"
+                >
+                  {type.type.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

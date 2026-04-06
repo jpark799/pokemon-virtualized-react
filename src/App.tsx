@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react"
-import { useGetPokemonList } from "./api/useGetPokemonList"
+import { useGetPokemonList } from "./api/"
 import { useVirtualizer } from "@tanstack/react-virtual"
 import {
   PageHeader,
