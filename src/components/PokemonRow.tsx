@@ -4,6 +4,8 @@ import { idFromUrl } from "../utils"
 import type { VirtualItem } from "@tanstack/react-virtual"
 
 interface PokemonRowProps {
+  /** The callback invoked when the user clicks this row. */
+  onClick: () => void
   /** The pokemon that is shown in the row. */
   pokemon: PokemonListItem
   /** metadata used to position the in the scrolling list. */
@@ -11,6 +13,7 @@ interface PokemonRowProps {
 }
 
 export const PokemonRow: FunctionComponent<PokemonRowProps> = ({
+  onClick,
   pokemon,
   virtualItem,
 }) => {
@@ -18,11 +21,12 @@ export const PokemonRow: FunctionComponent<PokemonRowProps> = ({
 
   return (
     <div
+      className="absolute top-0 left-0 w-full flex items-center px-4 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+      onClick={onClick}
       style={{
         height: `${virtualItem.size}px`,
         transform: `translateY(${virtualItem.start}px)`,
       }}
-      className="absolute top-0 left-0 w-full flex items-center px-4 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
     >
       <span className="w-16 text-xs font-medium text-gray-400">
         #{String(id).padStart(4, "0")}
