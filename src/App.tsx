@@ -25,7 +25,7 @@ export default function App() {
 
   return (
     <div className="flex flex-col h-screen max-w-sm mx-auto">
-      <PageHeader totalPokemonCount={data?.count.toLocaleString()} />
+      <PageHeader totalPokemonCount={data?.results.length.toString()} />
 
       <PokemonTableHeader />
 
