@@ -1,73 +1,37 @@
-# React + TypeScript + Vite
+# Pokédex Virtualized
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Charmander Modal](src/assets/CharmanderModal.png)
 
-Currently, two official plugins are available:
+A small side project built to explore virtualized lists in React. A standard technique for whenever I need to render large datasets without sacrificing performance.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Why I built this
 
-## React Compiler
+Keeping experiences fast is a constant concern in frontend engineering. Rendering hundreds or thousands of DOM nodes at once tanks scroll performance and wastes memory. Virtualization solves this by only rendering the rows currently visible in the viewport, regardless of how large the full list is.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+I wanted a hands-on project to put this into practice, so I built a Pokédex with all 1,025 Pokémon using TanStack Virtual for the virtualized list and TanStack Query for data fetching and caching.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Virtualized list rendering ~15 rows at a time regardless of total count.
+- Full list of 1,025 Pokémon fetched in a single request and cached permanently.
+- Click any row to open a detail modal with official artwork, types, base stats, and quick facts.
+- Detail fetches are cached per Pokémon and clicking the same one twice hits the cache reducing the need for extra API calls.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [TanStack Query](https://tanstack.com/query) — server state management and caching
+- [TanStack Virtual](https://tanstack.com/virtual) — row virtualization
+- [Tailwind CSS v4](https://tailwindcss.com/)
+- [PokéAPI](https://pokeapi.co/) — free, open Pokémon data
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Getting started
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+```bash
+# Install dependencies
+npm install
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Start the dev server
+npm run dev
 ```
