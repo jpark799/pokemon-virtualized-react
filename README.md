@@ -2,6 +2,8 @@
 
 ![Charmander Modal](src/assets/CharmanderModal.png)
 
+**[Live Demo](https://pokemon-virtualized-react.vercel.app/)**
+
 A small side project built to explore virtualized lists in React. A standard technique for whenever I need to render large datasets without sacrificing performance.
 
 ## Why I built this
