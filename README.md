@@ -22,11 +22,11 @@ I wanted a hands-on project to put this into practice, so I built a Pokédex wit
 
 ## Tech stack
 
-- [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vitejs.dev/)
+- [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) — component-based UI development with type-safe props and state
+- [Vite](https://vitejs.dev/) — fast local development and optimized production builds
 - [TanStack Query](https://tanstack.com/query) — server state management and caching
 - [TanStack Virtual](https://tanstack.com/virtual) — row virtualization
-- [Tailwind CSS v4](https://tailwindcss.com/)
+- [Tailwind CSS v4](https://tailwindcss.com/) — styling
 - [PokéAPI](https://pokeapi.co/) — free, open Pokémon data
 - [Vitest](https://vitest.dev/) + [Testing Library](https://testing-library.com/docs/react-testing-library/intro/) + [Happy DOM](https://github.com/capricorn86/happy-dom) — unit and component tests
 
