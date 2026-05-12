@@ -18,11 +18,14 @@ export const PokemonRow: FunctionComponent<PokemonRowProps> = ({
   virtualItem,
 }) => {
   const id = idFromUrl(pokemon.url)
+  const pokemonName = pokemon.name.replace(/-/g, " ")
 
   return (
-    <div
-      className="absolute top-0 left-0 w-full flex items-center px-4 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+    <button
+      type="button"
+      className="absolute top-0 left-0 w-full flex items-center px-4 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/70 transition-colors cursor-pointer text-left bg-transparent"
       onClick={onClick}
+      aria-label={`View ${pokemonName} details`}
       style={{
         height: `${virtualItem.size}px`,
         transform: `translateY(${virtualItem.start}px)`,
@@ -32,8 +35,8 @@ export const PokemonRow: FunctionComponent<PokemonRowProps> = ({
         #{String(id).padStart(4, "0")}
       </span>
       <span className="flex-1 text-sm font-medium capitalize">
-        {pokemon.name.replace(/-/g, " ")}
+        {pokemonName}
       </span>
-    </div>
+    </button>
   )
 }

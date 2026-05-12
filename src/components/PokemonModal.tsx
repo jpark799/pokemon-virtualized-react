@@ -1,4 +1,9 @@
-import type { FunctionComponent } from "react"
+import {
+  useEffect,
+  useRef,
+  type FunctionComponent,
+  type KeyboardEvent,
+} from "react"
 import { usePokemonDetail } from "../api"
 import { capitalizeString } from "../utils/capitalizeString"
 import { StatBar } from "./StatBar"
@@ -17,6 +22,8 @@ export const PokemonModal: FunctionComponent<PokemonModalProps> = ({
   onClose,
 }) => {
   const { data, isLoading } = usePokemonDetail(name)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
 
   const artwork =
     data?.sprites.other["official-artwork"].front_default ??
@@ -27,12 +34,61 @@ export const PokemonModal: FunctionComponent<PokemonModalProps> = ({
   const headerHex =
     TypeBackgroundColorHex[primaryType] ?? TypeBackgroundColorHex.normal
 
+  useEffect(() => {
+    const previousActiveElement = document.activeElement as HTMLElement | null
+    closeButtonRef.current?.focus()
+
+    return () => {
+      previousActiveElement?.focus()
+    }
+  }, [])
+
+  const onDialogKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Escape") {
+      e.preventDefault()
+      onClose()
+      return
+    }
+
+    if (e.key !== "Tab" || !dialogRef.current) return
+
+    const focusableElements = dialogRef.current.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+    )
+
+    if (focusableElements.length === 0) {
+      e.preventDefault()
+      return
+    }
+
+    const firstElement = focusableElements[0]
+    const lastElement = focusableElements[focusableElements.length - 1]
+    const activeElement = document.activeElement
+
+    if (e.shiftKey && activeElement === firstElement) {
+      e.preventDefault()
+      lastElement.focus()
+      return
+    }
+
+    if (!e.shiftKey && activeElement === lastElement) {
+      e.preventDefault()
+      firstElement.focus()
+    }
+  }
+
   return (
     <div
       className="fixed inset-0 bg-black/55 flex items-center justify-center z-50 p-4"
       onClick={onClose}
     >
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="pokemon-modal-title"
+        tabIndex={-1}
+        onKeyDown={onDialogKeyDown}
         className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 w-full max-w-sm max-h-[90vh] overflow-y-auto flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
@@ -42,6 +98,7 @@ export const PokemonModal: FunctionComponent<PokemonModalProps> = ({
           style={{ backgroundColor: headerHex + "22" }}
         >
           <button
+            ref={closeButtonRef}
             onClick={onClose}
             className="absolute top-3 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xl leading-none p-1 cursor-pointer bg-transparent border-none"
             aria-label="Close"
@@ -66,7 +123,10 @@ export const PokemonModal: FunctionComponent<PokemonModalProps> = ({
               <span className="text-xs font-medium text-gray-400 tracking-widest mb-0.5">
                 #{String(data.id).padStart(4, "0")}
               </span>
-              <h2 className="text-2xl font-semibold mb-2 capitalize tracking-tight">
+              <h2
+                id="pokemon-modal-title"
+                className="text-2xl font-semibold mb-2 capitalize tracking-tight"
+              >
                 {capitalizeString(data.name)}
               </h2>
               <div className="flex gap-1.5">
