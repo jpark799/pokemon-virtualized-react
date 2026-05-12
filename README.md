@@ -18,6 +18,7 @@ I wanted a hands-on project to put this into practice, so I built a Pokédex wit
 - Full list of 1,028 Pokémon fetched in a single request and cached permanently.
 - Click any row to open a detail modal with official artwork, types, base stats, and quick facts.
 - Detail fetches are cached per Pokémon and clicking the same one twice hits the cache reducing the need for extra API calls.
+- Lightweight test coverage for utility functions, and key UI interactions.
 
 ## Tech stack
 
@@ -27,6 +28,7 @@ I wanted a hands-on project to put this into practice, so I built a Pokédex wit
 - [TanStack Virtual](https://tanstack.com/virtual) — row virtualization
 - [Tailwind CSS v4](https://tailwindcss.com/)
 - [PokéAPI](https://pokeapi.co/) — free, open Pokémon data
+- [Vitest](https://vitest.dev/) + [Testing Library](https://testing-library.com/docs/react-testing-library/intro/) + [Happy DOM](https://github.com/capricorn86/happy-dom) — unit and component tests
 
 ## Getting started
 
@@ -36,4 +38,7 @@ npm install
 
 # Start the dev server
 npm run dev
+
+# Run tests
+npm test
 ```
