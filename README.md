@@ -1,6 +1,6 @@
 # Pokédex Virtualized
 
-![Charmander Modal](src/assets/CharmanderModal.png)
+![Charmander Modal](src/assets/BestStarterPokemonModal.png)
 
 **[Live Demo](https://pokemon-virtualized-react.vercel.app/)**
 
